@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UseToolsFun - All-in-One Tool Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1E1E2F;
+            color: #EAEAEA;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #2B2D42;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #FFD700;
+            color: #1E1E2F;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #FFD700;
+            color: #1E1E2F;
+        }
+
+        .btn-primary:hover {
+            background-color: #E6C200;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #EAEAEA;
+            border: 1px solid #EAEAEA;
+        }
+
+        .btn-secondary:hover {
+            background-color: #EAEAEA;
+            color: #1E1E2F;
+        }
+
+        /* Search Bar */
+        .search-container {
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            font-size: 1rem;
+            background-color: #3A3D5B;
+            color: #EAEAEA;
+        }
+
+        .search-bar input::placeholder {
+            color: #AAAAAA;
+        }
+
+        .search-bar button {
+            padding: 0 1.5rem;
+            background-color: #FFD700;
+            color: #1E1E2F;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background-color: #E6C200;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #FFD700;
+            font-size: 2.5rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background-color: #3A3D5B;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            background-color: #FFD700;
+            color: #1E1E2F;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(255, 215, 0, 0.3);
+        }
+
+        .tool-card h2 {
+            margin-bottom: 0.8rem;
+            color: inherit;
+        }
+
+        .tool-card p {
+            margin-bottom: 1.2rem;
+            color: inherit;
+            opacity: 0.9;
+        }
+
+        .tool-card .btn {
+            width: 100%;
+        }
+
+        /* Contact Page Styles */
+        .contact-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #3A3D5B;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #2B2D42;
+            color: #EAEAEA;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Auth Page Styles */
+        .auth-container {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #3A3D5B;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .auth-switch {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .auth-switch a {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2B2D42;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #FFD700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3A3D5B;
+            color: #FFD700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #FFD700;
+            color: #1E1E2F;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #3A3D5B;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Hidden class for page switching */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo">UseToolsFun</div>
+        <nav class="nav-links">
+            <a href="#" class="nav-link" data-page="home">Home</a>
+            <a href="#tools" class="nav-link" data-page="tools">All Tools</a>
+            <a href="#" class="nav-link" data-page="contact">Contact</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn btn-secondary" id="loginBtn">Login</button>
+            <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" placeholder="Search for tools..." id="searchInput">
+            <button id="searchBtn">Search</button>
+        </div>
+    </div>
+
+    <!-- Home Page Content -->
+    <main id="homePage">
+        <h1 class="page-title">All-in-One Tool Collection</h1>
+        
+        <div class="tools-grid" id="toolsGrid">
+            <!-- Tool cards will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <!-- Contact Page Content -->
+    <div id="contactPage" class="hidden">
+        <div class="contact-container">
+            <h1 class="page-title">Contact Us</h1>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Page Content -->
+    <div id="loginPage" class="hidden">
+        <div class="auth-container">
+            <h1 class="page-title">Login</h1>
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <div class="auth-switch">
+                    Don't have an account? <a href="#" id="switchToSignup">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Page Content -->
+    <div id="signupPage" class="hidden">
+        <div class="auth-container">
+            <h1 class="page-title">Sign Up</h1>
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+                <div class="auth-switch">
+                    Already have an account? <a href="#" id="switchToLogin">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#tools" class="nav-link" data-page="tools">All Tools</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p style="margin-top: 1rem;">Email: support@usetoolsfun.com</p>
+                <p>Phone: +1 (555) 123-4567</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2023 UseToolsFun. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tool data
+        const tools = [
+            {
+                name: "Image Converter",
+                description: "Convert images between different formats like JPG, PNG, WEBP, and more with high quality."
+            },
+            {
+                name: "Image Compressor",
+                description: "Reduce image file size without noticeable quality loss. Perfect for web optimization."
+            },
+            {
+                name: "Image Crop",
+                description: "Crop your images to any size or aspect ratio. Remove unwanted parts easily."
+            },
+            {
+                name: "Video Converter",
+                description: "Convert videos between MP4, AVI, MOV, MKV and other popular formats quickly."
+            },
+            {
+                name: "Age Calculator",
+                description: "Calculate your exact age in years, months, and days based on your birth date."
+            },
+            {
+                name: "EMI Calculator",
+                description: "Calculate your Equated Monthly Installment for loans with detailed breakdown."
+            },
+            {
+                name: "SIP Calculator",
+                description: "Plan your Systematic Investment Plan returns with this powerful calculator."
+            },
+            {
+                name: "Audio Trim",
+                description: "Cut and trim your audio files online. Extract specific parts from your recordings."
+            }
+        ];
+
+        // Current user state
+        let currentUser = null;
+
+        // DOM Elements
+        const homePage = document.getElementById('homePage');
+        const contactPage = document.getElementById('contactPage');
+        const loginPage = document.getElementById('loginPage');
+        const signupPage = document.getElementById('signupPage');
+        const toolsGrid = document.getElementById('toolsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contactForm = document.getElementById('contactForm');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const switchToSignup = document.getElementById('switchToSignup');
+
+        // Initialize the page
+        function init() {
+            renderTools();
+            showPage('home');
+            setupEventListeners();
+        }
+
+        // Render tools to the grid
+        function renderTools(filter = '') {
+            toolsGrid.innerHTML = '';
+            
+            const filteredTools = tools.filter(tool => 
+                tool.name.toLowerCase().includes(filter.toLowerCase()) || 
+                tool.description.toLowerCase().includes(filter.toLowerCase())
+            );
+            
+            filteredTools.forEach(tool => {
+                const toolCard = document.createElement('div');
+                toolCard.className = 'tool-card';
+                toolCard.innerHTML = `
+                    <h2>${tool.name}</h2>
+                    <p>${tool.description}</p>
+                    <button class="btn btn-primary" data-tool="${tool.name}">Use Tool</button>
+                `;
+                toolsGrid.appendChild(toolCard);
+            });
+            
+            // Add event listeners to tool buttons
+            document.querySelectorAll('[data-tool]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const toolName = this.getAttribute('data-tool');
+                    redirectToTool(toolName);
+                });
+            });
+        }
+
+        // Show a specific page
+        function showPage(pageName) {
+            homePage.classList.add('hidden');
+            contactPage.classList.add('hidden');
+            loginPage.classList.add('hidden');
+            signupPage.classList.add('hidden');
+            
+            switch(pageName) {
+                case 'home':
+                    homePage.classList.remove('hidden');
+                    break;
+                case 'contact':
+                    contactPage.classList.remove('hidden');
+                    break;
+                case 'login':
+                    loginPage.classList.remove('hidden');
+                    break;
+                case 'signup':
+                    signupPage.classList.remove('hidden');
+                    break;
+            }
+            
+            // Update active nav link
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageName) {
+                    link.style.backgroundColor = '#FFD700';
+                    link.style.color = '#1E1E2F';
+                } else {
+                    link.style.backgroundColor = '';
+                    link.style.color = '';
+                }
+            });
+            
+            // Update auth buttons if user is logged in
+            if (currentUser) {
+                loginBtn.textContent = 'Logout';
+                signupBtn.classList.add('hidden');
+            } else {
+                loginBtn.textContent = 'Login';
+                signupBtn.classList.remove('hidden');
+            }
+        }
+
+        // Redirect to tool (simulated)
+        function redirectToTool(toolName) {
+            if (currentUser) {
+                alert(`Welcome ${currentUser.name}! Redirecting to ${toolName}...`);
+                // In a real implementation:
+                // window.location.href = `/tools/${toolName.toLowerCase().replace(' ', '-')}`;
+            } else {
+                if (confirm(`You need to login to use ${toolName}. Would you like to login now?`)) {
+                    showPage('login');
+                }
+            }
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.getAttribute('data-page');
+                    showPage(page);
+                });
+            });
+            
+            // Auth buttons
+            loginBtn.addEventListener('click', function() {
+                if (currentUser) {
+                    currentUser = null;
+                    showPage('home');
+                    alert('You have been logged out.');
+                } else {
+                    showPage('login');
+                }
+            });
+            
+            signupBtn.addEventListener('click', function() {
+                showPage('signup');
+            });
+            
+            // Search functionality
+            searchBtn.addEventListener('click', searchTools);
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchTools();
+                }
+            });
+            
+            // Auth switch links
+            switchToLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('login');
+            });
+            
+            switchToSignup.addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage('signup');
+            });
+            
+            // Form submissions
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const contactData = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message')
+                };
+                // In a real app, you would send this to a server
+                alert(`Thank you for your message, ${contactData.name}! We'll get back to you soon.`);
+                this.reset();
+                showPage('home');
+            });
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                // In a real app, you would validate and send to a server
+                currentUser = {
+                    email: formData.get('email'),
+                    name: 'User' // Normally you'd get this from the server
+                };
+                alert(`Welcome back! You're now logged in.`);
+                this.reset();
+                showPage('home');
+            });
+            
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const formData = new FormData(this);
+                const password = formData.get('password');
+                const confirmPassword = formData.get('confirmPassword');
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                // In a real app, you would validate and send to a server
+                currentUser = {
+                    name: formData.get('name'),
+                    email: formData.get('email')
+                };
+                alert(`Welcome ${currentUser.name}! Your account has been created.`);
+                this.reset();
+                showPage('home');
+            });
+        }
+
+        // Search tools function
+        function searchTools() {
+            const searchTerm = searchInput.value.trim();
+            renderTools(searchTerm);
+            
+            if (searchTerm) {
+                // Scroll to tools section
+                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
